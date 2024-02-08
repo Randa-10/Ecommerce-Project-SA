@@ -15,8 +15,8 @@ const mongoose=require("mongoose")
 
 
 mongoose.connect(
-    // 'mongodb://27.0.0.1:27017/Api'
-    "mongodb+srv://mustafamhmod95:bYrUCQ2Jf6z3ZU8w@amazon.fj4moo9.mongodb.net/AmazonDB"
+    'mongodb://27.0.0.1:27017/Api'
+    // "mongodb+srv://mustafamhmod95:bYrUCQ2Jf6z3ZU8w@amazon.fj4moo9.mongodb.net/AmazonDB"
 
     )
 .then(()=>{
