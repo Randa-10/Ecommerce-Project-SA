@@ -2,7 +2,11 @@
 
 const express=require("express")
 const mongoose=require("mongoose")
- var app=express()  //object for return to express
+const cors = require('cors');
+
+ var app=express() 
+  //object for return to express
+ app.use(cors());
 
  app.use(express.json())
  const productRoutes = require('./routes/productRout');
@@ -14,11 +18,8 @@ const mongoose=require("mongoose")
 
 
 
-mongoose.connect(
-    'mongodb://27.0.0.1:27017/Api'
-    // "mongodb+srv://mustafamhmod95:bYrUCQ2Jf6z3ZU8w@amazon.fj4moo9.mongodb.net/AmazonDB"
-
-    )
+mongoose.connect
+('mongodb+srv://ecommerce-h-r:ahmed&randa@cluster-h-r.lwnmhhu.mongodb.net/')
 .then(()=>{
 console.log("connected to db successfully"); }
 )

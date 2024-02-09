@@ -11,10 +11,7 @@ const productSchema = mongoose.Schema(
 				type: String,
 				required: true,
 			},
-			brand: {
-				type: String,
-				required: true,
-			},
+	
 		},
 		ar: {
 			title: {
@@ -25,10 +22,7 @@ const productSchema = mongoose.Schema(
 				type: String,
 				required: true,
 			},
-			brand: {
-				type: String,
-				required: true,
-			},
+		
 		},
 		thumbnail: {
 			type: String,
@@ -36,24 +30,15 @@ const productSchema = mongoose.Schema(
 		},
 		images: {type: Array}
         ,
-		quantityInStock: {
-			type: Number,
-			required: true,
-		},
+		
 		price: {
 			type: Number,
 			required: true,
 		},
-		discountPercentage: {
-			type: Number,
-			required: true,
-		},
-		rating: {
-			type: Number,
-			default: 0,
-		},
-		ratingQuantity: {type: Number, default: 0},
-		rating: {
+		
+		distance:
+		 {type: Number, default: 0},
+		beds: {
 			type: Number,
 			default: 0,
 		},
