@@ -45,21 +45,23 @@ const  filterProductsByPrice = async (req, res) => {
 };
 //add 
 const addProduct = async (req, res) => {
-    const { en, ar, thumbnail, images,  price,  } = req.body;
+    const { title,description, location, thumbnail, images,  price, category } = req.body;
 
     // Validate input
-    if (!en || !ar || !thumbnail  || !price ) {
-        return res.status(400).json({ message: "Missing required fields" });
-    }
+    // if (!en || !ar || !thumbnail  || !price ) {
+    //     return res.status(400).json({ message: "Missing required fields" });
+    // }
 
     try {
         // Create a new product instance
         const newProduct = new Product({
-            en,
-            ar,
+            title,
             thumbnail,
             images,
             price,
+            category,
+            location,
+            description
         });
 
         // Save the product to the database
