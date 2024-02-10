@@ -95,6 +95,14 @@ const productSchema = mongoose.Schema(
 			type: Number,
 			// required: true,
 		},
+        distance:
+		        {type: Number,
+                default:124},
+                beds: {
+			type: Number,
+            default:2
+		
+		},
     },
     { timestamps: true }
 );

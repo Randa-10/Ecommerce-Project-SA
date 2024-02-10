@@ -45,7 +45,7 @@ const  filterProductsByPrice = async (req, res) => {
 };
 //add 
 const addProduct = async (req, res) => {
-    const { title,description, location, thumbnail, images,  price, category } = req.body;
+    const { title,description, location, thumbnail, images,  price, category ,beds,distance } = req.body;
 
     // Validate input
     // if (!en || !ar || !thumbnail  || !price ) {
@@ -62,6 +62,7 @@ const addProduct = async (req, res) => {
             category,
             location,
             description
+            ,beds,distance 
         });
 
         // Save the product to the database
