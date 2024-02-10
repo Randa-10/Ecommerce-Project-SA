@@ -43,6 +43,8 @@ const  filterProductsByPrice = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 };
+
+
 //add 
 const addProduct = async (req, res) => {
     const { title,description, location, thumbnail, images,  price, category ,beds,distance } = req.body;
@@ -75,19 +77,74 @@ const addProduct = async (req, res) => {
 };
 // Search products by name
 const searchProductsByName = async (req, res) => {
-    const { name } = req.query;
+    // const { name } = req.query;
+    // try {
+    //     const products = await Product.find({ $text: { $search: name } });
+    //     res.json(products);
+    // } catch (err) {
+    //     res.status(500).json({ message: err.message });
+    // }
+
+    
     try {
-        const products = await Product.find({ $text: { $search: name } });
+        const { title } = req.body;
+
+        // Ensure that the title is provided in the request body
+        if (!title) {
+            return res.status(400).json({ error: 'Search term (title) is required in the request body' });
+        }
+
+        // Use a regular expression to perform a case-insensitive search for the title
+        const products = await Product.find({ title: { $regex: new RegExp(title, 'i') } });
+
         res.json(products);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
+    } catch (error) {
+        console.error('Error searching products:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+
+};
+
+
+
+
+
+
+const filterProductsByCategory = async (req, res) => {
+    const { category } = req.body;
+
+    try {
+        // Query products based on the provided category
+        const products = await Product.find({ category });
+
+        res.json(products);
+    } catch (error) {
+        console.error('Error filtering products by category:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+
+
+const getCategories = async (req, res) => {
+    try {
+        const categories = await Product.distinct('category');
+        res.json(categories);
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 module.exports = {
     searchProductsByName,
     filterProductsByPrice,
     editProduct,
     getAllProducts,
     addProduct,
-    getProductById
+    getProductById,
+    filterProductsByCategory,
+    getCategories
 }
