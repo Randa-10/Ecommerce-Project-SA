@@ -1,13 +1,12 @@
 
 
-
 const mongoose = require("mongoose");
 
 const productSchema = mongoose.Schema(
     {
         title: {
             type: String,
-            // required: true,
+            required: true,
         },
         category: {
             type: String,
@@ -15,30 +14,41 @@ const productSchema = mongoose.Schema(
         },
         location: {
             type: String,
-            // required: true,
+            required: true,
         },
         description: {
             type: String,
-            // required: true,
+            required: true,
         },
-		images: {type: Array},
-
-		thumbnail: {
-			type: String,
-			// required: true,
-		},
-		price: {
-			type: Number,
-			// required: true,
-		},
-        distance:
-		        {type: Number,
-                default:124},
-                beds: {
-			type: Number,
-            default:2
-		
-		},
+        images: { type: Array },
+        thumbnail: {
+            type: String,
+            required: true,
+        },
+        price: {
+            type: Number,
+            required: true,
+        },
+        distance: {
+            type: Number,
+            default: 124
+        },
+        beds: {
+            type: Number,
+            default: 2
+        },
+        comments: [
+            {
+                text: {
+                    type: String,
+                    required: true
+                },
+                date: {
+                    type: Date,
+                    default: Date.now
+                }
+            }
+        ]
     },
     { timestamps: true }
 );

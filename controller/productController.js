@@ -11,15 +11,15 @@ const getAllProducts = async (req, res) => {
 };
 //get by id 
 const getProductById = async (req, res) => {
-    const { id } = req.params; // Extract the product ID from the request parameters
+    const { id } = req.params; 
     try {
-        const product = await Product.findById(id); // Find the product by its ID
+        const product = await Product.findById(id); 
         if (!product) {
-            return res.status(404).json({ message: 'Product not found' }); // If product is not found, return 404
+            return res.status(404).json({ message: 'Product not found' }); 
         }
-        res.json(product); // Return the product if found
+        res.json(product); 
     } catch (err) {
-        res.status(500).json({ message: err.message }); // Handle any errors
+        res.status(500).json({ message: err.message }); 
     }
 };
 // Edit a product
@@ -77,24 +77,14 @@ const addProduct = async (req, res) => {
 };
 // Search products by name
 const searchProductsByName = async (req, res) => {
-    // const { name } = req.query;
-    // try {
-    //     const products = await Product.find({ $text: { $search: name } });
-    //     res.json(products);
-    // } catch (err) {
-    //     res.status(500).json({ message: err.message });
-    // }
-
     
     try {
         const { title } = req.body;
 
-        // Ensure that the title is provided in the request body
         if (!title) {
             return res.status(400).json({ error: 'Search term (title) is required in the request body' });
         }
 
-        // Use a regular expression to perform a case-insensitive search for the title
         const products = await Product.find({ title: { $regex: new RegExp(title, 'i') } });
 
         res.json(products);
@@ -138,6 +128,46 @@ const getCategories = async (req, res) => {
 };
 
 
+
+
+const addCommentToProduct = async (req, res) => {
+    const { productId } = req.params;
+    const { text } = req.body;
+  
+    try {
+      const product = await Product.findById(productId);
+      if (!product) {
+        return res.status(404).json({ error: 'Product not found' });
+      }
+  
+      product.comments.push({ text });
+      await product.save();
+  
+      res.status(201).json(product);
+    } catch (error) {
+      console.error('Error adding comment:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
+
+  async function getAllCommentsForProduct(req, res) {
+    const { productId } = req.params;
+
+    try {
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        const comments = product.comments;
+        res.status(200).json(comments);
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
 module.exports = {
     searchProductsByName,
     filterProductsByPrice,
@@ -146,5 +176,7 @@ module.exports = {
     addProduct,
     getProductById,
     filterProductsByCategory,
-    getCategories
+    getCategories,
+    addCommentToProduct,
+    getAllCommentsForProduct
 }
